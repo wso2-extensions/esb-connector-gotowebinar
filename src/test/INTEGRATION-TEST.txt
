@@ -40,7 +40,7 @@ Steps to follow in setting integration test.
 		<messageBuilder contentType="text/html"
 						class="org.wso2.carbon.relay.BinaryRelayBuilder"/>
 
- 4. Compress modified ESB as wso2esb- 4.9.0-ALPHA.zip and copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
+ 4. Compress modified ESB as wso2esb- 4.9.0.zip and copy that zip file in to location "<ESB_CONNECTORS_HOME>/repository/".
 
  5. Create a Citrix account and obtain a client ID.
 	i) 		Using the URL "https://developer.citrixonline.com/user/register" create a Citrix online account.
