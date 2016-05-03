@@ -22,6 +22,8 @@
         <dependency component="gotowebinar-registrants"/>
         <dependency component="gotowebinar-sessions"/>
         <dependency component="gotowebinar-webinars"/>
+        <dependency component="gotowebinar-attendees"/>
+        <dependency component="gotowebinar-co-organizers"/>
         <description>wso2 connector library for GoToWebinar</description>
         <icon>icon/icon-small.gif</icon>
     </component>

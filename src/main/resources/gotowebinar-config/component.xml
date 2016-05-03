@@ -22,5 +22,9 @@
             <file>init.xml</file>
             <description>Config operation.</description>
         </component>
+        <component name="getAccessTokenFromRefreshToken">
+            <file>getAccessTokenFromRefreshToken.xml</file>
+            <description>Get the access token from refresh token.</description>
+        </component>
     </subComponents>
 </component>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~  Copyright (c) 2016, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~
+~  WSO2 Inc. licenses this file to you under the Apache License,
+~  Version 2.0 (the "License"); you may not use this file except
+~  in compliance with the License.
+~  You may obtain a copy of the License at
+~
+~   http://www.apache.org/licenses/LICENSE-2.0
+~
+~  Unless required by applicable law or agreed to in writing,
+~  software distributed under the License is distributed on an
+~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~  KIND, either express or implied.  See the License for the
+~  specific language governing permissions and limitations
+~  under the License.
+-->
+<template name="createCOOrganizer" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="webinarKey" description="Unique numeric key to webinar"/>
+    <parameter name="external" description=" If the co-organizer has no GoToWebinar account, this value has to be set to 'true'."/>
+    <parameter name="organizerKey" description="The co-organizer's organizer key. This parameter has to be passed only, if 'external' is set to 'false'."/>
+    <parameter name="givenName" description="The co-organizer's given name. This parameter has to be passed only, if 'external' is set to 'true'."/>
+    <parameter name="email" description="The co-organizer's email address. This parameter has to be passed only, if 'external' is set to 'true'."/>
+    <sequence>
+        <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
+        <property name="uri.var.external" expression="$func:external"/>
+        <property name="uri.var.organizerKey" expression="$func:organizerKey"/>
+        <property name="uri.var.givenName" expression="$func:givenName"/>
+        <property name="uri.var.email" expression="$func:email"/>
+        <payloadFactory media-type="json">
+            <format>
+               [
+                   {
+                       "external" : $1,
+                       "organizerKey": "$2",
+                       "givenName": "$3",
+                       "email": "$4"
+                   }
+               ]
+            </format>
+            <args>
+                <arg expression="$ctx:uri.var.external"/>
+                <arg expression="$ctx:uri.var.organizerKey"/>
+                <arg expression="$ctx:uri.var.givenName"/>
+                <arg expression="$ctx:uri.var.email"/>
+            </args>
+        </payloadFactory>
+        <script language="js">
+            <![CDATA[
+                var external = mc.getProperty('uri.var.external');
+                var email = mc.getProperty('uri.var.email');
+                var organizerKey = mc.getProperty('uri.var.organizerKey');
+                var givenName = mc.getProperty('uri.var.givenName');
+                payload  = mc.getPayloadJSON();
+
+                if (external == true){
+                    delete payload.organizerKey;
+                }
+
+                if (external == false){
+                    delete payload.email;
+                    delete payload.givenName;
+                }
+
+               	mc.setPayloadJSON(payload);
+            ]]>
+        </script>
+        <property name="messageType" value="application/json" scope="axis2"/>
+        <call>
+            <endpoint>
+                <http method="post"
+                      uri-template="{uri.var.apiUrl}/organizers/{uri.var.organizerKey}/webinars/{uri.var.webinarKey}/coorganizers"/>
+            </endpoint>
+        </call>
+        <!-- Removing custom headers -->
+        <header name="Content-Language" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Headers" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Origin" action="remove" scope="transport"/>
+        <header name="Vary" action="remove" scope="transport"/>
+        <header name="Access-Control-Max-Age" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Methods" action="remove" scope="transport"/>
+        <header name="ETag" action="remove" scope="transport"/>
+    </sequence>
+</template>

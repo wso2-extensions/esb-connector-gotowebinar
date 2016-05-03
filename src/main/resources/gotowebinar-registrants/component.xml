@@ -30,5 +30,13 @@
             <file>getRegistrantById.xml</file>
             <description>Retrieve registration details for a specific registrant.</description>
         </component>
+        <component name="getRegistrationFields">
+            <file>getRegistrationFields.xml</file>
+            <description>Retrieve required, optional registration, and custom questions for a specified webinar.</description>
+        </component>
+        <component name="deleteRegistrant">
+            <file>deleteRegistrant.xml</file>
+            <description>Removes a webinar registrant from current registrations for the specified webinar. The webinar must be a scheduled and future webinar.</description>
+        </component>
     </subComponents>
 </component>

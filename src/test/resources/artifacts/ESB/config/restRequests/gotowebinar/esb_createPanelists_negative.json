@@ -1,0 +1,8 @@
+{
+    "apiUrl":"%s(apiUrl)",
+    "accessToken":"%s(accessToken)",
+    "organizerKey":"%s(organizerKey)",
+	"webinarKey":"%s(invalidProperty)",
+	"name":"%s(name)",
+	"email":"%s(email)"
+}

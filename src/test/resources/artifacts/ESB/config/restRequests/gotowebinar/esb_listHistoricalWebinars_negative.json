@@ -2,6 +2,6 @@
     "apiUrl": "%s(apiUrl)",
     "accessToken": "%s(accessToken)",
     "organizerKey": "%s(organizerKey)",
-    "fromTime":"%s(fromTime)",
-	"toTime":"invalid"
+    "fromTime": "%s(fromTime)",
+	"toTime": "%s(invalidProperty)"
 }

@@ -27,6 +27,8 @@
             <property name="apiUrl" expression="json-eval($.apiUrl)"/>
             <property name="accessToken" expression="json-eval($.accessToken)"/>
             <property name="organizerKey" expression="json-eval($.organizerKey)"/>
+            <property name="grantType" expression="json-eval($.grantType)"/>
+            <property name="clientId" expression="json-eval($.clientId)"/>
             <property name="webinarKey" expression="json-eval($.webinarKey)"/>
             <property name="sessionKey" expression="json-eval($.sessionKey)"/>
             <property name="registrantKey" expression="json-eval($.registrantKey)"/>
@@ -38,10 +40,31 @@
             <property name="jobTitle" expression="json-eval($.jobTitle)"/>
             <property name="fromTime" expression="json-eval($.fromTime)"/>
             <property name="toTime" expression="json-eval($.toTime)"/>
+            <property name="coorganizerKey" expression="json-eval($.coorganizerKey)"/>
+            <property name="external" expression="json-eval($.external)"/>
+            <property name="givenName" expression="json-eval($.givenName)"/>
+            <property name="subject" expression="json-eval($.subject)"/>
+            <property name="description" expression="json-eval($.description)"/>
+            <property name="webinarStartTime" expression="json-eval($.webinarStartTime)"/>
+            <property name="webinarEndTime" expression="json-eval($.webinarEndTime)"/>
+            <property name="timeZone" expression="json-eval($.timeZone)"/>
+            <property name="locale" expression="json-eval($.locale)"/>
+            <property name="tollFreeCountries" expression="json-eval($.tollFreeCountries)"/>
+            <property name="tollCountries" expression="json-eval($.tollCountries)"/>
+            <property name="name" expression="json-eval($.name)"/>
+            <property name="notifyParticipants" expression="json-eval($.notifyParticipants)"/>
+            <property name="panelist" expression="json-eval($.panelist)"/>
+            <property name="organizer" expression="json-eval($.organizer)"/>
+            <property name="attendee" expression="json-eval($.attendee)"/>
+            <property name="type" expression="json-eval($.type)"/>
+            <property name="sendCancellationEmails" expression="json-eval($.sendCancellationEmails)"/>
+            <property name="resendConfirmation" expression="json-eval($.resendConfirmation)"/>
             <gotowebinar.init>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <organizerKey>{$ctx:organizerKey}</organizerKey>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
+                <grantType>{$ctx:grantType}</grantType>
+                <clientId>{$ctx:clientId}</clientId>
             </gotowebinar.init>
             <switch source="get-property('transport','Action')">
                 <case regex="urn:listSessions">
@@ -61,10 +84,35 @@
                         <sessionKey>{$ctx:sessionKey}</sessionKey>
                     </gotowebinar.listSessionAttendees>
                 </case>
-                <case regex="urn:getWebinarById">
-                    <gotowebinar.getWebinarById>
+                <case regex="urn:getOrganizerSessions">
+                    <gotowebinar.getOrganizerSessions>
+                        <fromTime>{$ctx:fromTime}</fromTime>
+                        <toTime>{$ctx:toTime}</toTime>
+                    </gotowebinar.getOrganizerSessions>
+                </case>
+                <case regex="urn:getSessionPerformance">
+                    <gotowebinar.getSessionPerformance>
                         <webinarKey>{$ctx:webinarKey}</webinarKey>
-                    </gotowebinar.getWebinarById>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                    </gotowebinar.getSessionPerformance>
+                </case>
+                <case regex="urn:getSessionPolls">
+                    <gotowebinar.getSessionPolls>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                    </gotowebinar.getSessionPolls>
+                </case>
+                <case regex="urn:getSessionQuestions">
+                    <gotowebinar.getSessionQuestions>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                    </gotowebinar.getSessionQuestions>
+                </case>
+                <case regex="urn:getSessionSurveys">
+                    <gotowebinar.getSessionSurveys>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                    </gotowebinar.getSessionSurveys>
                 </case>
                 <case regex="urn:listRegistrants">
                     <gotowebinar.listRegistrants>
@@ -83,10 +131,39 @@
                         <firstName>{$ctx:firstName}</firstName>
                         <lastName>{$ctx:lastName}</lastName>
                         <email>{$ctx:email}</email>
+                        <address>{$ctx:address}</address>
+                        <city>{$ctx:city}</city>
+                        <state>{$ctx:state}</state>
+                        <zipCode>{$ctx:zipCode}</zipCode>
+                        <country>{$ctx:country}</country>
+                        <phone>{$ctx:phone}</phone>
+                        <source>{$ctx:source}</source>
                         <organization>{$ctx:organization}</organization>
                         <industry>{$ctx:industry}</industry>
                         <jobTitle>{$ctx:jobTitle}</jobTitle>
+                        <purchasingTimeFrame>{$ctx:purchasingTimeFrame}</purchasingTimeFrame>
+                        <roleInPurchaseProcess>{$ctx:roleInPurchaseProcess}</roleInPurchaseProcess>
+                        <numberOfEmployees>{$ctx:numberOfEmployees}</numberOfEmployees>
+                        <questionsAndComments>{$ctx:questionsAndComments}</questionsAndComments>
+                        <responses>{$ctx:responses}</responses>
+                        <resendConfirmation>{$ctx:resendConfirmation}</resendConfirmation>
                     </gotowebinar.createRegistrant>
+                </case>
+                <case regex="urn:deleteRegistrant">
+                    <gotowebinar.deleteRegistrant>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <registrantKey>{$ctx:registrantKey}</registrantKey>
+                    </gotowebinar.deleteRegistrant>
+                </case>
+                <case regex="urn:getRegistrationFields">
+                    <gotowebinar.getRegistrationFields>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getRegistrationFields>
+                </case>
+                <case regex="urn:getWebinarById">
+                    <gotowebinar.getWebinarById>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getWebinarById>
                 </case>
                 <case regex="urn:listHistoricalWebinars">
                     <gotowebinar.listHistoricalWebinars>
@@ -96,6 +173,143 @@
                 </case>
                 <case regex="urn:listUpcomingWebinars">
                     <gotowebinar.listUpcomingWebinars/>
+                </case>
+                <case regex="urn:cancelWebinar">
+                    <gotowebinar.cancelWebinar>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sendCancellationEmails>{$ctx:sendCancellationEmails}</sendCancellationEmails>
+                    </gotowebinar.cancelWebinar>
+                </case>
+                <case regex="urn:createPanelists">
+                    <gotowebinar.createPanelists>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <email>{$ctx:email}</email>
+                        <name>{$ctx:name}</name>
+                    </gotowebinar.createPanelists>
+                </case>
+                <case regex="urn:createWebinar">
+                    <gotowebinar.createWebinar>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <subject>{$ctx:subject}</subject>
+                        <description>{$ctx:description}</description>
+                        <webinarStartTime>{$ctx:webinarStartTime}</webinarStartTime>
+                        <webinarEndTime>{$ctx:webinarEndTime}</webinarEndTime>
+                        <timeZone>{$ctx:timeZone}</timeZone>
+                    </gotowebinar.createWebinar>
+                </case>
+                <case regex="urn:getAllWebinars">
+                    <gotowebinar.getAllWebinars/>
+                </case>
+                <case regex="urn:getAttendeesForAllWebinarSessions">
+                    <gotowebinar.getAttendeesForAllWebinarSessions>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getAttendeesForAllWebinarSessions>
+                </case>
+                <case regex="urn:getAudioInformation">
+                    <gotowebinar.getAudioInformation>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getAudioInformation>
+                </case>
+                <case regex="urn:getPerformanceForAllWebinarSessions">
+                    <gotowebinar.getPerformanceForAllWebinarSessions>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getPerformanceForAllWebinarSessions>
+                </case>
+                <case regex="urn:getWebinarMeetingTimes">
+                    <gotowebinar.getWebinarMeetingTimes>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getWebinarMeetingTimes>
+                </case>
+                <case regex="urn:getWebinarPanelists">
+                    <gotowebinar.getWebinarPanelists>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.getWebinarPanelists>
+                </case>
+                <case regex="urn:updateAudioInformation">
+                    <gotowebinar.updateAudioInformation>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <notifyParticipants>{$ctx:notifyParticipants}</notifyParticipants>
+                        <type>{$ctx:type}</type>
+                        <tollFreeCountries>{$ctx:tollFreeCountries}</tollFreeCountries>
+                        <tollCountries>{$ctx:tollCountries}</tollCountries>
+                        <attendee>{$ctx:attendee}</attendee>
+                        <organizer>{$ctx:organizer}</organizer>
+                        <panelist>{$ctx:panelist}</panelist>
+                    </gotowebinar.updateAudioInformation>
+                </case>
+                <case regex="urn:updateWebinar">
+                    <gotowebinar.updateWebinar>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <notifyParticipants>{$ctx:notifyParticipants}</notifyParticipants>
+                        <subject>{$ctx:subject}</subject>
+                        <description>{$ctx:description}</description>
+                        <webinarStartTime>{$ctx:webinarStartTime}</webinarStartTime>
+                        <webinarEndTime>{$ctx:webinarEndTime}</webinarEndTime>
+                        <timeZone>{$ctx:timeZone}</timeZone>
+                        <locale>{$ctx:locale}</locale>
+                    </gotowebinar.updateWebinar>
+                </case>
+                <case regex="urn:createCOOrganizer">
+                    <gotowebinar.createCOOrganizer>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <external>{$ctx:external}</external>
+                        <organizerKey>{$ctx:organizerKey}</organizerKey>
+                        <email>{$ctx:email}</email>
+                        <givenName>{$ctx:givenName}</givenName>
+                    </gotowebinar.createCOOrganizer>
+                </case>
+                <case regex="urn:deleteCOOrganizer">
+                    <gotowebinar.deleteCOOrganizer>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <coorganizerKey>{$ctx:coorganizerKey}</coorganizerKey>
+                        <external>{$ctx:external}</external>
+                    </gotowebinar.deleteCOOrganizer>
+                </case>
+                <case regex="urn:listCOOrganizers">
+                    <gotowebinar.listCOOrganizers>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                    </gotowebinar.listCOOrganizers>
+                </case>
+                <case regex="urn:resendInvitation">
+                    <gotowebinar.resendInvitation>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <coorganizerKey>{$ctx:coorganizerKey}</coorganizerKey>
+                        <external>{$ctx:external}</external>
+                    </gotowebinar.resendInvitation>
+                </case>
+                <case regex="urn:getAttendee">
+                    <gotowebinar.getAttendee>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                        <registrantKey>{$ctx:registrantKey}</registrantKey>
+                    </gotowebinar.getAttendee>
+                </case>
+                <case regex="urn:getAttendeePollAnswers">
+                    <gotowebinar.getAttendeePollAnswers>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                        <registrantKey>{$ctx:registrantKey}</registrantKey>
+                    </gotowebinar.getAttendeePollAnswers>
+                </case>
+                <case regex="urn:getAttendeeQuestions">
+                    <gotowebinar.getAttendeeQuestions>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                        <registrantKey>{$ctx:registrantKey}</registrantKey>
+                    </gotowebinar.getAttendeeQuestions>
+                </case>
+                <case regex="urn:getAttendeeSurveyAnswers">
+                    <gotowebinar.getAttendeeSurveyAnswers>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                        <registrantKey>{$ctx:registrantKey}</registrantKey>
+                    </gotowebinar.getAttendeeSurveyAnswers>
+                </case>
+                <case regex="urn:getSessionAttendees">
+                    <gotowebinar.getSessionAttendees>
+                        <webinarKey>{$ctx:webinarKey}</webinarKey>
+                        <sessionKey>{$ctx:sessionKey}</sessionKey>
+                    </gotowebinar.getSessionAttendees>
                 </case>
             </switch>
             <respond/>

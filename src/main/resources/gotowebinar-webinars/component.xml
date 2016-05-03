@@ -30,5 +30,49 @@
             <file>getWebinarById.xml</file>
             <description>Retrieve information on a specific webinar.</description>
         </component>
+        <component name="getAllWebinars">
+            <file>getAllWebinars.xml</file>
+            <description>Returns webinars scheduled for the future for a specified organizer.</description>
+        </component>
+        <component name="createWebinar">
+            <file>createWebinar.xml</file>
+            <description>Creates a single session webinar.</description>
+        </component>
+        <component name="cancelWebinar">
+            <file>cancelWebinar.xml</file>
+            <description>Cancels a specific webinar.</description>
+        </component>
+        <component name="updateWebinar">
+            <file>updateWebinar.xml</file>
+            <description>Updates a webinar.</description>
+        </component>
+        <component name="getAttendeesForAllWebinarSessions">
+            <file>getAttendeesForAllWebinarSessions.xml</file>
+            <description>Returns all attendees for all sessions of the specified webinar.</description>
+        </component>
+        <component name="getAudioInformation">
+            <file>getAudioInformation.xml</file>
+            <description>Retrieves the audio/conferencing information for a specific webinar.</description>
+        </component>
+        <component name="updateAudioInformation">
+            <file>updateAudioInformation.xml</file>
+            <description>Updates the audio/conferencing settings for a specific webinar.</description>
+        </component>
+        <component name="getWebinarMeetingTimes">
+            <file>getWebinarMeetingTimes.xml</file>
+            <description>Retrieves the meeting times for a webinar.</description>
+        </component>
+        <component name="getWebinarPanelists">
+            <file>getWebinarPanelists.xml</file>
+            <description>Retrieves all the panelists for a specific webinar.</description>
+        </component>
+        <component name="createPanelists">
+            <file>createPanelists.xml</file>
+            <description>Create panelists for a specified webinar.</description>
+        </component>
+        <component name="getPerformanceForAllWebinarSessions">
+            <file>getPerformanceForAllWebinarSessions.xml</file>
+            <description>Gets performance details for all sessions of a specific webinar.</description>
+        </component>
     </subComponents>
 </component>

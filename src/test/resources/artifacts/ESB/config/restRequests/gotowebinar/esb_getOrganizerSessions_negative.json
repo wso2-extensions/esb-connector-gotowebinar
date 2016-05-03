@@ -1,0 +1,8 @@
+{
+    "apiUrl": "%s(apiUrl)",
+    "accessToken": "%s(accessToken)",
+    "organizerKey": "%s(invalidProperty)",
+    "fromTime": "%s(searchFromTime)",
+    "toTime": "%s(searchToTime)"
+}
+

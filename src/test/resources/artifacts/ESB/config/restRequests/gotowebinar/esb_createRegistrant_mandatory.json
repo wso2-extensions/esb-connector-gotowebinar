@@ -1,8 +1,8 @@
 {
-	"apiUrl": "%s(apiUrl)",
-    "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)",
-	"webinarKey":"%s(upcommingWebinarKey)",
+	"apiUrl":"%s(apiUrl)",
+    "accessToken":"%s(accessToken)",
+    "organizerKey":"%s(organizerKey)",
+	"webinarKey":"%s(upcomingWebinarKey)",
 	"firstName":"%s(firstName)",
 	"lastName":"%s(lastName)",
 	"email":"%s(email)"

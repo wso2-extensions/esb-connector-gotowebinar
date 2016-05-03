@@ -51,33 +51,40 @@ Steps to follow in setting integration test.
 	i)		Using the URL "https://secure.citrixonline.com/secure/gotowebinar/commerce/try/register" create a GoToWebinar free trial account using following details.
 			a)Select number of organizer seats as 9.
 			b)Enter the relevant information to create the account.
-    ii)	    Follow the instructions in the 	"https://developer.citrixonline.com/page/direct-login" and make a GET request to the URL "https://api.citrixonline.com/oauth/access_token" passing the below parameters.
+    ii)	    Refer "https://developer.citrixonline.com/how-use-direct-login" and make a GET request to the URL "https://api.citrixonline.com/oauth/access_token" passing the below parameters.
 			a)grant_type -   Use "password".
 			b)user_id    -   User email address that you used to create the GoToWebinar account.
 			c)password 	 -   Password of your GoToWebinar account.
 			d)client_id  -	 Use the Consumer Key you obtained under Step 4 iii).
-	iii)	Get the ornanizer_key and the access token from the response.
+	iii)	Get the organizer_key and the access token from the response.
 
  7. Pre-requisites for Integration tests
 
-	i) 	Create and complete a webinar with more than one registrants (by clicking 'Registration URL') and sessions (Click on the scheduled webinar and add another session).
-	ii) Create more than one upcoming webinars.
+	i) 	 Create and complete an upcoming webinar with more than one registrants (by clicking 'Registration URL') and sessions
+		 (Click on the scheduled webinar and add another session by editing 'Date and Time'
+		 or While scheduling the webinar, select 'Custom Schedule' under 'Occurs' and add multiple sessions by hitting
+		 'Add another session' option).
+	ii)  The upcoming webinar should has at least one past session and it should has at least one attended registrant.
+	iii) This set-up should has only one past webinar session.
+	iv)  At least one registrant should have participated and should have at least one 'Panelist' in the past webinar session.
+	v)   That past webinar session should have at least one 'Session poll', 'Question' and 'Survey'.
+    vi)  Create more than one upcoming webinars.
 
  8. Update the GoToWebinar properties file at location "{GOTOWEBINAR_HOME}/src/test/resources/artifacts/ESB/connector/config" as below.
 
-	i)apiUrl                -   Use the API URL as "https://api.citrixonline.com".
-	ii)accessToken          -   Place the access token from the generated in step 6 [iii].
-	iii)organizerKey        -   Place the ornanizer_key from the generated in in step 6 [iii].
-	iv)firstName            -   First name of the registrant.
-	v)lastName              -   Last name of the registrant.
-	vi)email                -   Email of the registrant(Should change before each run).
-	vii)firstNameOpt        -   First name of the registrant.
-	viii)lastNameOpt        -   Last name of the registrant.
-	ix)emailOpt             -   Email of the different registrant(Should change before each run).
-	x)organization          -   organization which registrant belongs.
-	xi)industry             -   Industry of the registrant.
-	xii)jobTitle            -   Job title of the registrant.
-	xiii)invalidUpcommingWebinarKey  -   Non existing webinar key.
+	i)apiUrl                        -   Use the API URL as "https://api.citrixonline.com".
+	ii)accessToken                  -   Place the access token from the generated in step 6 [iii].
+	iii)organizerKey                -   Place the ornanizer_key from the generated in in step 6 [iii].
+	iv)firstName                    -   First name of the registrant.
+	v)lastName                      -   Last name of the registrant.
+	vi)email                        -   Email of the registrant(Should change before each run).
+	vii)firstNameOpt                -   First name of the registrant.
+	viii)lastNameOpt                -   Last name of the registrant.
+	ix)emailOpt                     -   Email of the different registrant(Should change before each run).
+	x)organization                  -   organization which registrant belongs.
+	xi)industry                     -   Industry of the registrant.
+	xii)jobTitle                    -   Job title of the registrant.
+	xiii)invalidUpcomingWebinarKey  -   Non existing webinar key.
 
  9. Navigate to "<GOTOWEBINAR_HOME>" and run the following command.
           $ mvn clean install

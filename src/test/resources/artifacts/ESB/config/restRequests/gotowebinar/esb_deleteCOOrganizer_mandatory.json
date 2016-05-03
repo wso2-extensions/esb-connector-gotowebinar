@@ -1,0 +1,8 @@
+{
+    "apiUrl":"%s(apiUrl)",
+    "accessToken":"%s(accessToken)",
+    "organizerKey":"%s(organizerKey)",
+    "webinarKey":"%s(upcomingWebinarKey)",
+    "coorganizerKey":"%s(coorganizerKey)",
+    "external":"%s(isExternalCOOrganizer)"
+}

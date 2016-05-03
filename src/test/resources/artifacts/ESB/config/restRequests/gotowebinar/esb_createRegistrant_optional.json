@@ -1,12 +1,14 @@
 {
-	"apiUrl": "%s(apiUrl)",
-    "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)",
-	"webinarKey":"%s(upcommingWebinarKey)",
+	"apiUrl":"%s(apiUrl)",
+    "accessToken":"%s(accessToken)",
+    "organizerKey":"%s(organizerKey)",
+	"webinarKey":"%s(upcomingWebinarKey)",
 	"firstName":"%s(firstNameOpt)",
 	"lastName":"%s(lastNameOpt)",
 	"email":"%s(emailOpt)",
 	"organization":"%s(organization)",
 	"industry":"%s(industry)",
-	"jobTitle":"%s(jobTitle)"
+	"jobTitle":"%s(jobTitle)",
+    "resendConfirmation":"%s(resendConfirmation)",
+    "source":"%s(source)"
 }

@@ -1,9 +1,9 @@
 {
-	"apiUrl": "%s(apiUrl)",
-    "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)",
-	"webinarKey":"%s(invalidUpcommingWebinarKey)",
+	"apiUrl":"%s(apiUrl)",
+    "accessToken":"%s(accessToken)",
+    "organizerKey":"%s(organizerKey)",
+	"webinarKey":"%s(invalidUpcomingWebinarKey)",
 	"firstName":"%s(firstName)",
 	"lastName":"%s(lastName)",
-	"email":"INVALID"
+	"email":"%s(invalidProperty)"
 }
