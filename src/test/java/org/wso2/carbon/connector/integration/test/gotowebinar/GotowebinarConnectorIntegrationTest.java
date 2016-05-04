@@ -242,16 +242,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                         + connectorProperties.getProperty("sessionKey");
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
 
-        JSONArray esbResponseArray = new JSONArray(esbRestResponse.getBody().getString("output"));
-        JSONArray apiResponseArray = new JSONArray(apiRestResponse.getBody().getString("output"));
-
-        Assert.assertEquals(apiResponseArray.length(), esbResponseArray.length());
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("email"), esbResponseArray.getJSONObject(0)
-                .getString("email"));
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("attendanceTimeInSeconds"), esbResponseArray
-                .getJSONObject(0).getString("attendanceTimeInSeconds"));
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("registrantKey"), esbResponseArray
-                .getJSONObject(0).getString("registrantKey"));
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), apiRestResponse.getHttpStatusCode());
+        Assert.assertEquals(esbRestResponse.getBody().getString("output").toString(),
+                apiRestResponse.getBody().getString("output").toString());
     }
 
     /**
@@ -270,16 +263,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                         + connectorProperties.getProperty("sessionKey") + "/attendees";
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
 
-        JSONArray esbResponseArray = new JSONArray(esbRestResponse.getBody().getString("output"));
-        JSONArray apiResponseArray = new JSONArray(apiRestResponse.getBody().getString("output"));
-
-        Assert.assertEquals(apiResponseArray.length(), esbResponseArray.length());
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("email"), esbResponseArray.getJSONObject(0)
-                .getString("email"));
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("attendanceTimeInSeconds"), esbResponseArray
-                .getJSONObject(0).getString("attendanceTimeInSeconds"));
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("registrantKey"), esbResponseArray
-                .getJSONObject(0).getString("registrantKey"));
+        Assert.assertEquals(esbRestResponse.getHttpStatusCode(), apiRestResponse.getHttpStatusCode());
+        Assert.assertEquals(esbRestResponse.getBody().getString("output").toString(),
+                apiRestResponse.getBody().getString("output").toString());
     }
 
     /**
@@ -997,8 +983,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
         Assert.assertEquals(apiResponseArray.length(), esbResponseArray.length());
         Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("email"), esbResponseArray.getJSONObject(0)
                 .getString("email"));
-        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("registrantKey"), esbResponseArray
-                .getJSONObject(0).getString("registrantKey"));
+        Assert.assertEquals(apiResponseArray.getJSONObject(0).getString("sessionKey"), esbResponseArray
+                .getJSONObject(0).getString("sessionKey"));
     }
 
     /**

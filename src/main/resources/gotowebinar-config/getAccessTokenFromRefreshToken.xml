@@ -23,24 +23,10 @@
     <sequence>
         <property name="uri.var.refreshToken" expression="$func:refreshToken"/>
         <property name="uri.var.clientId" expression="$func:clientId"/>
-        <payloadFactory media-type="json">
-            <format>
-                {
-                    "refresh_token": "$1",
-                    "grant_type": "refresh_token",
-                    "client_id": "$2"
-                }
-            </format>
-            <args>
-                <arg expression="$ctx:uri.var.refreshToken"/>
-                <arg expression="$ctx:uri.var.clientId"/>
-            </args>
-        </payloadFactory>
-        <property name="messageType" value="application/x-www-form-urlencoded" scope="axis2"/>
         <call>
             <endpoint>
-                <http method="post"
-                      uri-template="https://api.citrixonline.com/oauth/access_token"/>
+                <http method="get"
+                      uri-template="https://api.citrixonline.com/oauth/access_token?client_id={uri.var.clientId}&amp;refresh_token={uri.var.refreshToken}&amp;grant_type=refresh_token"/>
             </endpoint>
         </call>
         <!-- Remove custom Headers from the API Response -->
@@ -48,14 +34,17 @@
         <header name="Transfer-Encoding" action="remove" scope="transport"/>
         <!-- Setting the new access token to the property. -->
         <property name="uri.var.accessToken" expression="json-eval($.access_token)"/>
+        <property name="uri.var.refreshToken" expression="json-eval($.refresh_token)"/>
         <property name="uri.var.organizerKey" expression="json-eval($.organizer_key)"/>
         <property name="systemTime" expression="$ctx:SYSTEM_TIME" scope="default"/>
         <script language="js">
             <![CDATA[
              importPackage(Packages.org.apache.synapse.config);
              var newAccessToken = mc.getProperty('uri.var.accessToken');
+             var newRefreshToken = mc.getProperty('uri.var.refreshToken');
              var newSystemTime = mc.getProperty('systemTime');
              var newAccessRegistryPath = mc.getProperty('uri.var.accessTokenRegistryPath');
+             var newRefreshRegistryPath = mc.getProperty('uri.var.refreshTokenRegistryPath');
              var newTimeRegistryPath = mc.getProperty('uri.var.timeRegistryPath');
              if(newAccessToken != null && newAccessToken != ''){
                 var existingAccessToken = mc.getConfiguration().getRegistry().getResource(newAccessRegistryPath);
@@ -70,6 +59,18 @@
                   // Update the registry entry if it already exists.
                       mc.getConfiguration().getRegistry().updateResource(newAccessRegistryPath, newAccessToken);
                       mc.getConfiguration().getRegistry().updateResource(newTimeRegistryPath, newSystemTime);
+                }
+             }
+             if(newRefreshToken != null && newRefreshToken != ''){
+                var existingRefreshToken = mc.getConfiguration().getRegistry().getResource(newRefreshRegistryPath);
+                var existingTime = mc.getConfiguration().getRegistry().getResource(newTimeRegistryPath);
+                if(existingRefreshToken == null){
+                  // Create the registry entry if no such entry exists.
+                      mc.getConfiguration().getRegistry().newResource(newRefreshRegistryPath, false);
+                      mc.getConfiguration().getRegistry().updateResource(newRefreshRegistryPath, newRefreshToken);
+                } else {
+                  // Update the registry entry if it already exists.
+                      mc.getConfiguration().getRegistry().updateResource(newRefreshRegistryPath, newRefreshToken);
                 }
              }
          ]]>

@@ -36,9 +36,6 @@
         <property name="uri.var.attendee" expression="$func:attendee"/>
         <property name="uri.var.organizer" expression="$func:organizer"/>
         <property name="uri.var.panelist" expression="$func:panelist"/>
-        <log level="custom">
-            <property name="uri.var.attendee333333333333333333333333" expression="$func:attendee"/>
-        </log>
         <payloadFactory media-type="json">
             <format>
                 {
