@@ -62,14 +62,7 @@
             <property name="type" expression="json-eval($.type)"/>
             <property name="sendCancellationEmails" expression="json-eval($.sendCancellationEmails)"/>
             <property name="resendConfirmation" expression="json-eval($.resendConfirmation)"/>
-            <!--<gotowebinar.init>-->
-                <!--<accessToken>{$ctx:accessToken}</accessToken>-->
-                <!--<organizerKey>{$ctx:organizerKey}</organizerKey>-->
-                <!--<apiUrl>{$ctx:apiUrl}</apiUrl>-->
-                <!--<grantType>{$ctx:grantType}</grantType>-->
-                <!--<clientId>{$ctx:clientId}</clientId>-->
-            <!--</gotowebinar.init>-->
-            <gotowebinar.init_r>
+            <gotowebinar.init>
                 <accessToken>{$ctx:accessToken}</accessToken>
                 <organizerKey>{$ctx:organizerKey}</organizerKey>
                 <apiUrl>{$ctx:apiUrl}</apiUrl>
@@ -77,7 +70,7 @@
                 <clientId>{$ctx:clientId}</clientId>
                 <registryPath>{$ctx:registryPath}</registryPath>
                 <intervalTime>{$ctx:intervalTime}</intervalTime>
-            </gotowebinar.init_r>
+            </gotowebinar.init>
             <switch source="get-property('transport','Action')">
                 <case regex="urn:listSessions">
                     <gotowebinar.listSessions>
