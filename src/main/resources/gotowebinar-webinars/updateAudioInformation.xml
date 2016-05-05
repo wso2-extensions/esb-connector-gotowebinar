@@ -98,7 +98,7 @@
                	mc.setPayloadJSON(payload);
             ]]>
         </script>
-        <filter xpath="(not(get-property('uri.var.notifyParticipants') = '' or (not(string(get-property('uri.var.notifyParticipants'))))))">
+        <filter xpath="(not($ctx:uri.var.notifyParticipants = '' or (not(string($ctx:uri.var.notifyParticipants)))))">
             <then>
                 <property name="uri.var.queryParameters"
                           expression="fn:concat($ctx:uri.var.queryParameters,'?notifyParticipants=',$ctx:uri.var.notifyParticipants)"/>

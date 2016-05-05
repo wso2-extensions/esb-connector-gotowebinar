@@ -44,7 +44,7 @@
                                   value="31535400000"/>
                     </then>
                 </filter>
-                <filter source="boolean(get-property('uri.var.registryPath'))" regex="true">
+                <filter source="boolean($ctx:uri.var.registryPath)" regex="true">
                     <then>
                         <property name="uri.var.accessTokenRegistryPath"
                                   expression="fn:concat($ctx:uri.var.registryPath, '/accessToken' )"/>
@@ -58,7 +58,7 @@
                           expression="get-property('registry', $ctx:uri.var.accessTokenRegistryPath)"/>
                 <property name="uri.var.refreshToken.reg"
                           expression="get-property('registry', $ctx:uri.var.refreshTokenRegistryPath)"/>
-                <property name="systemTime" expression="get-property('SYSTEM_TIME')"
+                <property name="systemTime" expression="$ctx:SYSTEM_TIME"
                           scope="default"/>
                 <filter source="$ctx:uri.var.accessToken.reg=''" regex="true">
                     <then>

@@ -154,7 +154,7 @@
                	mc.setPayloadJSON(payload);
           ]]>
         </script>
-        <filter xpath="(not(get-property('uri.var.resendConfirmation') = '' or (not(string(get-property('uri.var.resendConfirmation'))))))">
+        <filter xpath="(not($ctx:uri.var.resendConfirmation = '' or (not(string($ctx:uri.var.resendConfirmation)))))">
             <then>
                 <property name="uri.var.queryParameters"
                           expression="fn:concat($ctx:uri.var.queryParameters,'?notifyParticipants=',$ctx:uri.var.resendConfirmation)"/>

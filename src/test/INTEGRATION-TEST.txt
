@@ -67,7 +67,8 @@ Steps to follow in setting integration test.
 	ii)  The upcoming webinar should has at least one past session and it should has at least one attended registrant.
 	iii) This set-up should has only one past webinar session.
 	iv)  At least one registrant should have participated and should have at least one 'Panelist' in the past webinar session.
-	v)   That past webinar session should have at least one 'Session poll', 'Question' and 'Survey'.
+	v)   That past webinar session should have at least one 'Session poll', 'Question' and 'Survey'. For this, attend a session
+	     as a registrant and ask question, answer a poll and rate the webinar for survey.
     vi)  Create more than one upcoming webinars.
 
  8. Update the GoToWebinar properties file at location "{GOTOWEBINAR_HOME}/src/test/resources/artifacts/ESB/connector/config" as below.

@@ -22,7 +22,7 @@
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
         <property name="uri.var.sendCancellationEmails" expression="$func:sendCancellationEmails"/>
-        <filter xpath="(not(get-property('uri.var.sendCancellationEmails') = '' or (not(string(get-property('uri.var.sendCancellationEmails'))))))">
+        <filter xpath="(not($ctx:uri.var.sendCancellationEmails = '' or (not(string($ctx:uri.var.sendCancellationEmails)))))">
             <then>
                 <property name="uri.var.queryParameters"
                           expression="fn:concat($ctx:uri.var.queryParameters,'?sendCancellationEmails=',$ctx:uri.var.sendCancellationEmails)"/>
