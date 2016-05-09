@@ -3,6 +3,8 @@
     "accessToken": "%s(accessToken)",
     "organizerKey": "%s(organizerKey)",
     "webinarKey": "%s(newWebinarKeyOpt)",
+    "clientId": "%s(clientId)",
+    "refreshToken": "%s(refreshToken)",
     "sendCancellationEmails": "%s(sendCancellationEmails)"
 }
 

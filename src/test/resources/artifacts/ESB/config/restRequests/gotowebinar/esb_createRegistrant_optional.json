@@ -2,6 +2,8 @@
 	"apiUrl":"%s(apiUrl)",
     "accessToken":"%s(accessToken)",
     "organizerKey":"%s(organizerKey)",
+    "clientId":"%s(clientId)",
+    "refreshToken":"%s(refreshToken)",
 	"webinarKey":"%s(upcomingWebinarKey)",
 	"firstName":"%s(firstNameOpt)",
 	"lastName":"%s(lastNameOpt)",

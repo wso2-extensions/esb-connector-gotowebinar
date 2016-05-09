@@ -1,6 +1,8 @@
 {
     "apiUrl": "%s(apiUrl)",
     "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)"
+    "organizerKey": "%s(organizerKey)",
+    "clientId": "%s(clientId)",
+    "refreshToken": "%s(refreshToken)"
 }
 
