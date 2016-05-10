@@ -194,7 +194,6 @@
                 </case>
                 <case regex="urn:createWebinar">
                     <gotowebinar.createWebinar>
-                        <webinarKey>{$ctx:webinarKey}</webinarKey>
                         <subject>{$ctx:subject}</subject>
                         <description>{$ctx:description}</description>
                         <webinarStartTime>{$ctx:webinarStartTime}</webinarStartTime>
