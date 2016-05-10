@@ -22,8 +22,10 @@
                description="Boolean value, which defines whether to send notifications to participants."/>
     <parameter name="type"
                description="Indicates how to connect to the webinar's audio conference = ['PSTN', 'VOIP', 'Hybrid', 'Private']"/>
-    <parameter name="tollFreeCountries" description="Two-letter country code, in which countries toll free PSTN numbers are available."/>
-    <parameter name="tollCountries" description="Two-letter country code, in which countries toll PSTN numbers are available."/>
+    <parameter name="tollFreeCountries"
+               description="Two-letter country code, in which countries toll free PSTN numbers are available."/>
+    <parameter name="tollCountries"
+               description="Two-letter country code, in which countries toll PSTN numbers are available."/>
     <parameter name="attendee" description="Attendee phone number for own conference call system."/>
     <parameter name="organizer" description="Organizer phone number for own conference call system."/>
     <parameter name="panelist" description="Panelist phone number for own conference call system."/>

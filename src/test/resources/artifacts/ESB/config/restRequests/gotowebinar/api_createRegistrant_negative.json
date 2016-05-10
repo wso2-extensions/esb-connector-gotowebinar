@@ -1,5 +1,5 @@
 {
-	"firstName":"%s(firstName)",
-	"lastName":"%s(lastName)",
-	"email":"%s(invalidProperty)"
+  "firstName": "%s(firstName)",
+  "lastName": "%s(lastName)",
+  "email": "%s(invalidProperty)"
 }

@@ -18,13 +18,16 @@
 -->
 <template name="updateWebinar" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="webinarKey" description="Unique numeric key to retrieve the individual webinar details."/>
-    <parameter name="notifyParticipants" description="Boolean value, which defines whether to send notifications to participants."/>
+    <parameter name="notifyParticipants"
+               description="Boolean value, which defines whether to send notifications to participants."/>
     <parameter name="subject" description="The name or subject of the webinar (128 characters maximum)."/>
     <parameter name="description" description="A short description of the webinar (2048 characters maximum)."/>
     <parameter name="webinarStartTime" description="Start time of the webinar."/>
     <parameter name="webinarEndTime" description="End time of the webinar."/>
-    <parameter name="timeZone" description="The time zone where the webinar is taking place (must be a valid time zone ID)."/>
-    <parameter name="locale" description="The webinar language (E.g: 'en_US', 'de_DE', 'es_ES', 'fr_FR', 'it_IT', 'zh_CN')."/>
+    <parameter name="timeZone"
+               description="The time zone where the webinar is taking place (must be a valid time zone ID)."/>
+    <parameter name="locale"
+               description="The webinar language (E.g: 'en_US', 'de_DE', 'es_ES', 'fr_FR', 'it_IT', 'zh_CN')."/>
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
         <property name="uri.var.notifyParticipants" expression="$func:notifyParticipants"/>
@@ -37,11 +40,11 @@
         <payloadFactory media-type="json">
             <format>
                 {
-                    "times":
-                    [{
-                        "startTime": "$1",
-                        "endTime": "$2"
-                    }]
+                "times":
+                [{
+                "startTime": "$1",
+                "endTime": "$2"
+                }]
                 }
             </format>
             <args>

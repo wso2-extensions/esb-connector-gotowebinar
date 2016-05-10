@@ -40,7 +40,9 @@
         </component>
         <component name="getSessionPolls">
             <file>getSessionPolls.xml</file>
-            <description>Retrieve all collated attendee questions and answers for polls from a specific webinar session.</description>
+            <description>
+                Retrieve all collated attendee questions and answers for polls from a specific webinar session.
+            </description>
         </component>
         <component name="getSessionQuestions">
             <file>getSessionQuestions.xml</file>

@@ -18,7 +18,8 @@
 -->
 <template name="resendInvitation" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="webinarKey" description="Unique webinar key to retrieve the individual webinar details."/>
-    <parameter name="external" description=" If the co-organizer has no GoToWebinar account, this value has to be set to 'true'."/>
+    <parameter name="external"
+               description=" If the co-organizer has no GoToWebinar account, this value has to be set to 'true'."/>
     <parameter name="coorganizerKey" description="The key of the internal or external co-organizer (memberKey)."/>
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>

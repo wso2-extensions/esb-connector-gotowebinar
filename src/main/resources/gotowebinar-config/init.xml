@@ -129,6 +129,5 @@
                 scope="transport" action="set"/>
         <header name="Content-Type" value="application/json" scope="transport" action="set"/>
         <header name="Accept-Encoding" action="remove" scope="transport"/>
-
     </sequence>
 </template>

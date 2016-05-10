@@ -24,7 +24,9 @@
         </component>
         <component name="getAttendee">
             <file>getAttendee.xml</file>
-            <description>Retrieve registration details for a particular attendee of a specific webinar session.</description>
+            <description>
+                Retrieve registration details for a particular attendee of a specific webinar session.
+            </description>
         </component>
         <component name="getAttendeePollAnswers">
             <file>getAttendeePollAnswers.xml</file>

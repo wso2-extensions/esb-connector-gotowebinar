@@ -36,7 +36,8 @@
     <parameter name="numberOfEmployees" description="Number of employees in the registrant's organization."/>
     <parameter name="questionsAndComments" description="Questions and Comments for the registrant."/>
     <parameter name="responses" description="Responses for the quetions and comments."/>
-    <parameter name="resendConfirmation" description="ndicates whether the confirmation email should be resent when a registrant is re-registered."/>
+    <parameter name="resendConfirmation"
+               description="ndicates whether the confirmation email should be resent when a registrant is re-registered."/>
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
         <property name="uri.var.firstName" expression="$func:firstName"/>

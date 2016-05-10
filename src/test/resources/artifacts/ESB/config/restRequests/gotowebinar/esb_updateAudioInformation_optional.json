@@ -1,15 +1,15 @@
 {
-    "apiUrl":"%s(apiUrl)",
-    "accessToken":"%s(accessToken)",
-    "organizerKey":"%s(organizerKey)",
-    "clientId":"%s(clientId)",
-    "refreshToken":"%s(refreshToken)",
-    "webinarKey":"%s(upcomingWebinarKey)",
-    "type":"%s(type)",
-    "tollFreeCountries":%s(tollFreeCountries),
-    "tollCountries":%s(tollCountries),
-    "attendee":"%s(attendee)",
-    "organizer":"%s(organizer)",
-    "panelist":"%s(panelist)",
-    "notifyParticipants":"%s(notifyParticipants)"
+  "apiUrl": "%s(apiUrl)",
+  "accessToken": "%s(accessToken)",
+  "organizerKey": "%s(organizerKey)",
+  "clientId": "%s(clientId)",
+  "refreshToken": "%s(refreshToken)",
+  "webinarKey": "%s(upcomingWebinarKey)",
+  "type": "%s(type)",
+  "tollFreeCountries": %s(tollFreeCountries),
+  "tollCountries": %s(tollCountries),
+  "attendee": "%s(attendee)",
+  "organizer": "%s(organizer)",
+  "panelist": "%s(panelist)",
+  "notifyParticipants": "%s(notifyParticipants)"
 }

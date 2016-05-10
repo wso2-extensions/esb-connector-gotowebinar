@@ -1,8 +1,8 @@
 {
-    "apiUrl":"%s(apiUrl)",
-    "accessToken":"%s(accessToken)",
-    "organizerKey":"%s(organizerKey)",
-    "clientId":"%s(clientId)",
-    "refreshToken":"%s(refreshToken)",
-    "webinarKey":"%s(invalidProperty)"
+  "apiUrl": "%s(apiUrl)",
+  "accessToken": "%s(accessToken)",
+  "organizerKey": "%s(organizerKey)",
+  "clientId": "%s(clientId)",
+  "refreshToken": "%s(refreshToken)",
+  "webinarKey": "%s(invalidProperty)"
 }

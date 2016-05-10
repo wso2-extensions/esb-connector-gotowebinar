@@ -18,7 +18,8 @@
 -->
 <template name="cancelWebinar" xmlns="http://ws.apache.org/ns/synapse">
     <parameter name="webinarKey" description="Unique numeric key to retrieve the individual webinar details."/>
-    <parameter name="sendCancellationEmails" description="Boolean value, which indicates whether cancellation notice emails should be sent."/>
+    <parameter name="sendCancellationEmails"
+               description="Boolean value, which indicates whether cancellation notice emails should be sent."/>
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
         <property name="uri.var.sendCancellationEmails" expression="$func:sendCancellationEmails"/>
