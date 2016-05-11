@@ -48,7 +48,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-
         init("gotowebinar-connector-1.0.1-SNAPSHOT");
 
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
@@ -59,7 +58,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                 .put("Authorization", "OAuth oauth_token=" + connectorProperties.getProperty("accessToken"));
 
         apiRequestUrl = connectorProperties.getProperty("apiUrl") + "/G2W/rest";
-
         // Validate Pre-requisites, if not Tests are skipped.
         if (!validate()) {
             Assert.fail("Pre-requisites mentioned in the Readme file are not accomplished in order to run this Test Suite.");
@@ -76,21 +74,18 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      * @return boolean validation status.
      */
     private boolean validate() throws IOException, JSONException {
-
         boolean isValidSession = false;
         boolean isAnyUpcoming = false;
 
         Calendar calendar = Calendar.getInstance();
         Calendar currentCalendar = Calendar.getInstance();
         DateFormat isoTimeFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
         String toTime = isoTimeFormat.format(calendar.getTime());
         calendar.add(Calendar.YEAR, -1);
         String fromTime = isoTimeFormat.format(calendar.getTime());
 
         connectorProperties.put("searchFromTime", fromTime);
         connectorProperties.put("searchToTime", toTime);
-
         currentCalendar.add(currentCalendar.MONTH, 1);
         connectorProperties.put("webinarStartTime", isoTimeFormat.format(currentCalendar.getTime()));
         currentCalendar.add(currentCalendar.HOUR, 1);
@@ -106,14 +101,12 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
         outerloop:
         for (int i = 0; i < historicalWebinarArray.length(); i++) {
             String webinarKey = historicalWebinarArray.getJSONObject(i).getString("webinarKey");
-
             // Get all session details which belongs to the listed webinar.
             apiEndPoint =
                     apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey") + "/webinars/"
                             + webinarKey + "/sessions";
             apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
             JSONArray webinarSessionArray = new JSONArray(apiRestResponse.getBody().getString("output"));
-
             for (int j = 0; j < webinarSessionArray.length(); j++) {
                 int noOfRegistrants = webinarSessionArray.getJSONObject(j).getInt("registrantsAttended");
 
@@ -131,18 +124,15 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                 }
             }
         }
-
         // List all upcoming webinars
         apiEndPoint =
                 apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey") + "/upcomingWebinars";
         apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
         JSONArray apiResponseArray = new JSONArray(apiRestResponse.getBody().getString("output"));
-
         // If there are one or more upcoming webinars #upcomingWebinarKey property will be set
         if (apiResponseArray.length() > 0) {
             isAnyUpcoming = true;
             connectorProperties.put("upcomingWebinarKey", apiResponseArray.getJSONObject(0).getString("webinarKey"));
-
             for (int w = 0; w < apiResponseArray.length(); w++) {
                 String upcomingWebinarKeyToDeleteRegistrant = apiResponseArray.getJSONObject(w).getString("webinarKey");
                 connectorProperties.put("upcomingWebinarKeyToDeleteRegistrant", upcomingWebinarKeyToDeleteRegistrant);
@@ -181,7 +171,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarById} integration test with mandatory parameters.")
     public void testGetWebinarByIdWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getWebinarById");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getWebinarById_mandatory.json");
@@ -204,7 +193,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listSessions} integration test with mandatory parameters.")
     public void testListSessionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listSessions_mandatory.json");
@@ -231,7 +219,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionById} integration test with mandatory parameters.")
     public void testGetSessionByIdWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionById");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionById_mandatory.json");
@@ -252,7 +239,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listSessionAttendees} integration test with mandatory parameters.")
     public void testListSessionAttendeesWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listSessionAttendees");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listSessionAttendees_mandatory.json");
@@ -273,7 +259,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getOrganizerSessions} integration test with mandatory parameters.")
     public void testGetOrganizerSessionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getOrganizerSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getOrganizerSessions_mandatory.json");
@@ -282,7 +267,7 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                 apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey") + "/sessions?fromTime="
                         + connectorProperties.getProperty("searchFromTime") + "&toTime="
                         + connectorProperties.getProperty("searchToTime");
-        ;
+
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
 
         Assert.assertEquals(esbRestResponse.getHttpStatusCode(), apiRestResponse.getHttpStatusCode());
@@ -294,7 +279,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getOrganizerSessions} integration test with negative case.")
     public void testGetOrganizerSessionsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getOrganizerSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getOrganizerSessions_negative.json");
@@ -316,7 +300,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionPerformance} integration test with mandatory parameters.")
     public void testGetSessionPerformanceWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionPerformance");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionPerformance_mandatory.json");
@@ -344,7 +327,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionPerformance} integration test with negative case.")
     public void testGetSessionPerformanceWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionPerformance");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionPerformance_negative.json");
@@ -366,7 +348,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionPolls} integration test with mandatory parameters.")
     public void testGetSessionPollsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionPolls");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionPolls_mandatory.json");
@@ -393,7 +374,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionPolls} integration test with negative case.")
     public void testGetSessionPollsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionPolls");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionPolls_negative.json");
@@ -416,7 +396,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionQuestions} integration test with mandatory parameters.")
     public void testGetSessionQuestionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionQuestions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionQuestions_mandatory.json");
@@ -443,7 +422,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionQuestions} integration test with negative case.")
     public void testGetSessionQuestionsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionQuestions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionQuestions_negative.json");
@@ -466,7 +444,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionSurveys} integration test with mandatory parameters.")
     public void testGetSessionSurveysWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionSurveys");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionSurveys_mandatory.json");
@@ -478,8 +455,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
 
         Assert.assertEquals(esbRestResponse.getHttpStatusCode(), apiRestResponse.getHttpStatusCode());
-        Assert.assertEquals(esbRestResponse.getBody().getString("output").toString(),
-                apiRestResponse.getBody().getString("output").toString());
+        Assert.assertEquals(esbRestResponse.getBody().getString("output"),
+                apiRestResponse.getBody().getString("output"));
     }
 
     /**
@@ -487,7 +464,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionSurveys} integration test with negative case.")
     public void testGetSessionSurveysWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionSurveys");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionSurveys_negative.json");
@@ -510,7 +486,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createRegistrant} integration test with mandatory parameters.")
     public void testCreateRegistrantWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createRegistrant");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createRegistrant_mandatory.json");
@@ -538,7 +513,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createRegistrant} integration test with optional parameters.")
     public void testCreateRegistrantWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createRegistrant");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createRegistrant_optional.json");
@@ -565,7 +539,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createRegistrant} integration test with negative case.")
     public void testCreateRegistrantWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createRegistrant");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createRegistrant_negative.json");
@@ -587,7 +560,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listRegistrants} integration test with mandatory parameters.")
     public void testListRegistrantsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listRegistrants");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listRegistrants_mandatory.json");
@@ -614,7 +586,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {getRegistrantById} integration test with mandatory parameters.")
     public void testGetRegistrantByIdWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getRegistrantById");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getRegistrantById_mandatory.json");
@@ -639,7 +610,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getRegistrantById} integration test with mandatory parameters.")
     public void testGetRegistrationFieldsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getRegistrationFields");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getRegistrationFields_mandatory.json");
@@ -657,7 +627,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getRegistrationFields} integration test with negative case.")
     public void testGetRegistrationFieldsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getRegistrationFields");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getRegistrationFields_negative.json");
@@ -679,7 +648,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getRegistrantById} integration test with mandatory parameters.")
     public void testDeleteRegistrantWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:deleteRegistrant");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_deleteRegistrant_mandatory.json");
@@ -700,7 +668,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetRegistrantByIdWithMandatoryParameters", "testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {deleteRegistrant} integration test with negative case.")
     public void testDeleteRegistrantWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:deleteRegistrant");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_deleteRegistrant_negative.json");
@@ -713,7 +680,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listHistoricalWebinars} integration test with optional parameters.")
     public void testListHistoricalWebinarsWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listHistoricalWebinars");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listHistoricalWebinars_optional.json");
@@ -738,7 +704,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listHistoricalWebinars} integration test with negative case.")
     public void testListHistoricalWebinarsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listHistoricalWebinars");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listHistoricalWebinars_negative.json");
@@ -761,7 +726,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listUpcomingWebinars} integration test with mandatory parameters.")
     public void testListUpcomingWebinarsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listUpcomingWebinars");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listUpcomingWebinars_mandatory.json");
@@ -788,7 +752,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateWebinarWithMandatoryParameters"},
             description = "gotowebinar {cancelWebinar} integration test with mandatory parameters.")
     public void testCancelWebinarWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:cancelWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_cancelWebinar_mandatory.json");
@@ -808,7 +771,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateWebinarWithOptionalParameters"},
             description = "gotowebinar {cancelWebinar} integration test with optional parameters.")
     public void testCancelWebinarWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:cancelWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_cancelWebinar_optional.json");
@@ -827,7 +789,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {cancelWebinar} integration test with negative case.")
     public void testCancelWebinarWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:cancelWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_cancelWebinar_negative.json");
@@ -840,7 +801,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createPanelists} integration test with mandatory parameters.")
     public void testCreatePanelistsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createPanelists");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createPanelists_mandatory.json");
@@ -853,7 +813,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createPanelists} integration test with negative case.")
     public void testCreatePanelistsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createPanelists");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createPanelists_negative.json");
@@ -866,7 +825,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createWebinar} integration test with mandatory parameters.")
     public void testCreateWebinarWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createWebinar_mandatory.json");
@@ -887,7 +845,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createWebinar} integration test with optional parameters.")
     public void testCreateWebinarWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createWebinar_optional.json");
@@ -910,7 +867,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createWebinar} integration test with negative case.")
     public void testCreateWebinarWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createWebinar_negative.json");
@@ -923,7 +879,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAllWebinars} integration test with mandatory parameters.")
     public void testGetAllWebinarsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAllWebinars");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAllWebinars_mandatory.json");
@@ -947,7 +902,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAllWebinars} integration test with negative case.")
     public void testGetAllWebinarsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAllWebinars");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAllWebinars_negative.json");
@@ -968,7 +922,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with mandatory parameters.")
     public void testGetAttendeesForAllWebinarSessionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeesForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeesForAllWebinarSessions_mandatory.json");
@@ -992,7 +945,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with negative case.")
     public void testGetAttendeesForAllWebinarSessionsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeesForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeesForAllWebinarSessions_negative.json");
@@ -1014,7 +966,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAudioInformation} integration test with mandatory parameters.")
     public void testGetAudioInformationWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAudioInformation_mandatory.json");
@@ -1039,7 +990,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAudioInformation} integration test with negative case.")
     public void testGetAudioInformationWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAudioInformation_negative.json");
@@ -1059,9 +1009,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getPerformanceForAllWebinarSessions method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getPerformanceForAllWebinarSessions} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getPerformanceForAllWebinarSessions} integration test with mandatory parameters.")
     public void testGetPerformanceForAllWebinarSessionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getPerformanceForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPerformanceForAllWebinarSessions_mandatory.json");
@@ -1078,12 +1028,13 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getPerformanceForAllWebinarSessions method with Negative case.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getPerformanceForAllWebinarSessions} integration test with negative case.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getPerformanceForAllWebinarSessions} integration test with negative case.")
     public void testGetPerformanceForAllWebinarSessionsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getPerformanceForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
-                sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPerformanceForAllWebinarSessions_negative.json");
+                sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
+                        "esb_getPerformanceForAllWebinarSessions_negative.json");
 
         String apiEndPoint =
                 apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey")
@@ -1100,9 +1051,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getWebinarMeetingTimes method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarMeetingTimes} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getWebinarMeetingTimes} integration test with mandatory parameters.")
     public void testGetWebinarMeetingTimesWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getWebinarMeetingTimes");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getWebinarMeetingTimes_mandatory.json");
@@ -1124,9 +1075,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getWebinarMeetingTimes method with Negative case.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarMeetingTimes} integration test with negative case.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getWebinarMeetingTimes} integration test with negative case.")
     public void testGetWebinarMeetingTimesWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getWebinarMeetingTimes");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getWebinarMeetingTimes_negative.json");
@@ -1148,7 +1099,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarPanelists} integration test with mandatory parameters.")
     public void testGetWebinarPanelistsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getWebinarPanelists");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getWebinarPanelists_mandatory.json");
@@ -1172,7 +1122,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarPanelists} integration test with negative case.")
     public void testGetWebinarPanelistsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getWebinarPanelists");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getWebinarPanelists_negative.json");
@@ -1191,11 +1140,11 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
 
     /**
      * Test updateAudioInformation method with Mandatory Parameters.
+     * It is disabled due to the empty response body
      */
     @Test(enabled = false, groups = {"wso2.esb"}, dependsOnMethods = {"testGetAudioInformationWithMandatoryParameters"},
             description = "gotowebinar {updateAudioInformation} integration test with mandatory parameters.")
     public void testUpdateAudioInformationWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateAudioInformation_mandatory.json");
@@ -1215,10 +1164,11 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
 
     /**
      * Test updateAudioInformation method with Optional Parameters.
+     * It is disabled due to the empty response body
      */
-    @Test(enabled = false, groups = {"wso2.esb"}, description = "gotowebinar {updateAudioInformation} integration test with optional parameters.")
+    @Test(enabled = false, groups = {"wso2.esb"},
+            description = "gotowebinar {updateAudioInformation} integration test with optional parameters.")
     public void testUpdateAudioInformationWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateAudioInformation_optional.json");
@@ -1239,7 +1189,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {updateAudioInformation} integration test with negative case.")
     public void testUpdateAudioInformationWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateAudioInformation_negative.json");
@@ -1249,10 +1198,11 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
 
     /**
      * Test updateWebinar method with Mandatory Parameters.
+     * It is disabled due to the empty response body
      */
-    @Test(enabled = false, groups = {"wso2.esb"}, description = "gotowebinar {updateWebinar} integration test with mandatory parameters.")
+    @Test(enabled = false, groups = {"wso2.esb"},
+            description = "gotowebinar {updateWebinar} integration test with mandatory parameters.")
     public void testUpdateWebinarWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateWebinar_mandatory.json");
@@ -1262,10 +1212,11 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
 
     /**
      * Test updateWebinar method with Optional Parameters.
+     * It is disabled due to the empty response body
      */
-    @Test(enabled = false, groups = {"wso2.esb"}, description = "gotowebinar {updateWebinar} integration test with optional parameters.")
+    @Test(enabled = false, groups = {"wso2.esb"},
+            description = "gotowebinar {updateWebinar} integration test with optional parameters.")
     public void testUpdateWebinarWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateWebinar_optional.json");
@@ -1286,7 +1237,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {updateWebinar} integration test with negative case.")
     public void testUpdateWebinarWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:updateWebinar");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_updateWebinar_negative.json");
@@ -1300,7 +1250,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetSessionAttendeesWithMandatoryParameters"},
             description = "gotowebinar {getAttendee} integration test with mandatory parameters.")
     public void testGetAttendeeWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendee");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendee_mandatory.json");
@@ -1324,7 +1273,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {getAttendee} integration test with negative case.")
     public void testGetAttendeeWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendee");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendee_negative.json");
@@ -1349,7 +1297,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetSessionAttendeesWithMandatoryParameters"},
             description = "gotowebinar {getAttendeePollAnswers} integration test with mandatory parameters.")
     public void testGetAttendeePollAnswersWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeePollAnswers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeePollAnswers_mandatory.json");
@@ -1373,7 +1320,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {getAttendeePollAnswers} integration test with negative case.")
     public void testGetAttendeePollAnswersWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeePollAnswers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeePollAnswers_negative.json");
@@ -1398,7 +1344,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetSessionAttendeesWithMandatoryParameters"},
             description = "gotowebinar {getAttendeeQuestions} integration test with mandatory parameters.")
     public void testGetAttendeeQuestionsWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeeQuestions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeeQuestions_mandatory.json");
@@ -1421,7 +1366,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {getAttendeeQuestions} integration test with negative case.")
     public void testGetAttendeeQuestionsWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeeQuestions");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeeQuestions_negative.json");
@@ -1446,7 +1390,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetSessionAttendeesWithMandatoryParameters"},
             description = "gotowebinar {getAttendeeSurveyAnswers} integration test with mandatory parameters.")
     public void testGetAttendeeSurveyAnswersWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeeSurveyAnswers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeeSurveyAnswers_mandatory.json");
@@ -1469,7 +1412,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {getAttendeeSurveyAnswers} integration test with negative case.")
     public void testGetAttendeeSurveyAnswersWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getAttendeeSurveyAnswers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getAttendeeSurveyAnswers_negative.json");
@@ -1491,9 +1433,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getSessionAttendees method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionAttendees} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getSessionAttendees} integration test with mandatory parameters.")
     public void testGetSessionAttendeesWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionAttendees");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionAttendees_mandatory.json");
@@ -1519,7 +1461,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionAttendees} integration test with negative case.")
     public void testGetSessionAttendeesWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:getSessionAttendees");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getSessionAttendees_negative.json");
@@ -1540,9 +1481,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test createCOOrganizer method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {createCOOrganizer} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {createCOOrganizer} integration test with mandatory parameters.")
     public void testCreateCOOrganizerWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createCOOrganizer");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createCOOrganizer_mandatory.json");
@@ -1553,9 +1494,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test createCOOrganizer method with Optional Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {createCOOrganizer} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {createCOOrganizer} integration test with optional parameters.")
     public void testCreateCOOrganizerWithOptionalParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createCOOrganizer");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createCOOrganizer_optional.json");
@@ -1568,7 +1509,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {createCOOrganizer} integration test with negative case.")
     public void testCreateCOOrganizerWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:createCOOrganizer");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_createCOOrganizer_negative.json");
@@ -1582,7 +1522,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testResendInvitationWithMandatoryParameters"},
             description = "gotowebinar {deleteCOOrganizer} integration test with mandatory parameters.")
     public void testDeleteCOOrganizerWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:deleteCOOrganizer");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_deleteCOOrganizer_mandatory.json");
@@ -1595,7 +1534,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {deleteCOOrganizer} integration test with negative case.")
     public void testDeleteCOOrganizerWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:deleteCOOrganizer");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_deleteCOOrganizer_negative.json");
@@ -1606,9 +1544,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test listCOOrganizers method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateCOOrganizerWithMandatoryParameters"}, description = "gotowebinar {listCOOrganizers} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testCreateCOOrganizerWithMandatoryParameters"},
+            description = "gotowebinar {listCOOrganizers} integration test with mandatory parameters.")
     public void testListCOOrganizersWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listCOOrganizers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listCOOrganizers_mandatory.json");
@@ -1634,7 +1572,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {listCOOrganizers} integration test with negative case.")
     public void testListCOOrganizersWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:listCOOrganizers");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_listCOOrganizers_negative.json");
@@ -1654,9 +1591,9 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test resendInvitation method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testListCOOrganizersWithMandatoryParameters"}, description = "gotowebinar {resendInvitation} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testListCOOrganizersWithMandatoryParameters"},
+            description = "gotowebinar {resendInvitation} integration test with mandatory parameters.")
     public void testResendInvitationWithMandatoryParameters() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:resendInvitation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_resendInvitation_mandatory.json");
@@ -1669,7 +1606,6 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @Test(groups = {"wso2.esb"}, description = "gotowebinar {resendInvitation} integration test with negative case.")
     public void testResendInvitationWithNegativeCase() throws IOException, JSONException {
-
         esbRequestHeadersMap.put("Action", "urn:resendInvitation");
         RestResponse<JSONObject> esbRestResponse =
                 sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_resendInvitation_negative.json");
