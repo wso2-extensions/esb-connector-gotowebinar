@@ -48,7 +48,7 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
      */
     @BeforeClass(alwaysRun = true)
     public void setEnvironment() throws Exception {
-        init("gotowebinar-connector-1.0.1-SNAPSHOT");
+        init("gotowebinar-connector-1.0.2-SNAPSHOT");
 
         esbRequestHeadersMap.put("Accept-Charset", "UTF-8");
         esbRequestHeadersMap.put("Content-Type", "application/json");
