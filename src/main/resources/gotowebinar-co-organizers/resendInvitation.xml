@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~  Copyright (c) 2016, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~
+~  WSO2 Inc. licenses this file to you under the Apache License,
+~  Version 2.0 (the "License"); you may not use this file except
+~  in compliance with the License.
+~  You may obtain a copy of the License at
+~
+~   http://www.apache.org/licenses/LICENSE-2.0
+~
+~  Unless required by applicable law or agreed to in writing,
+~  software distributed under the License is distributed on an
+~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~  KIND, either express or implied.  See the License for the
+~  specific language governing permissions and limitations
+~  under the License.
+-->
+<template name="resendInvitation" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="webinarKey" description="Unique webinar key to retrieve the individual webinar details."/>
+    <parameter name="external"
+               description=" If the co-organizer has no GoToWebinar account, this value has to be set to 'true'."/>
+    <parameter name="coorganizerKey" description="The key of the internal or external co-organizer (memberKey)."/>
+    <sequence>
+        <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
+        <property name="uri.var.external" expression="$func:external"/>
+        <property name="uri.var.coorganizerKey" expression="$func:coorganizerKey"/>
+        <call>
+            <endpoint>
+                <http method="post"
+                      uri-template="{uri.var.apiUrl}/organizers/{uri.var.organizerKey}/webinars/{uri.var.webinarKey}/coorganizers/{uri.var.coorganizerKey}/resendInvitation?external={uri.var.external}"/>
+            </endpoint>
+        </call>
+        <!-- Removing custom headers -->
+        <header name="Content-Language" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Headers" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Origin" action="remove" scope="transport"/>
+        <header name="Vary" action="remove" scope="transport"/>
+        <header name="Access-Control-Max-Age" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Methods" action="remove" scope="transport"/>
+        <header name="ETag" action="remove" scope="transport"/>
+    </sequence>
+</template>

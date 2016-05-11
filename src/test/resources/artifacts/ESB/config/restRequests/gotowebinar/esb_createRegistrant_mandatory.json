@@ -1,9 +1,11 @@
 {
-	"apiUrl": "%s(apiUrl)",
-    "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)",
-	"webinarKey":"%s(upcommingWebinarKey)",
-	"firstName":"%s(firstName)",
-	"lastName":"%s(lastName)",
-	"email":"%s(email)"
+  "apiUrl": "%s(apiUrl)",
+  "accessToken": "%s(accessToken)",
+  "organizerKey": "%s(organizerKey)",
+  "clientId": "%s(clientId)",
+  "refreshToken": "%s(refreshToken)",
+  "webinarKey": "%s(upcomingWebinarKey)",
+  "firstName": "%s(firstName)",
+  "lastName": "%s(lastName)",
+  "email": "%s(email)"
 }

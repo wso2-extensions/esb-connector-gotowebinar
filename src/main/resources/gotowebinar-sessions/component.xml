@@ -30,5 +30,27 @@
             <file>listSessionAttendees.xml</file>
             <description>Retrieve attendee details for all attendees of a webinar session.</description>
         </component>
+        <component name="getOrganizerSessions">
+            <file>getOrganizerSessions.xml</file>
+            <description>Retrieve all completed sessions of all the webinars of a given organizer.</description>
+        </component>
+        <component name="getSessionPerformance">
+            <file>getSessionPerformance.xml</file>
+            <description>Get performance details for a session.</description>
+        </component>
+        <component name="getSessionPolls">
+            <file>getSessionPolls.xml</file>
+            <description>
+                Retrieve all collated attendee questions and answers for polls from a specific webinar session.
+            </description>
+        </component>
+        <component name="getSessionQuestions">
+            <file>getSessionQuestions.xml</file>
+            <description>Retrieve questions and answers for a past webinar session.</description>
+        </component>
+        <component name="getSessionSurveys">
+            <file>getSessionSurveys.xml</file>
+            <description>Retrieve surveys for a past webinar session.</description>
+        </component>
     </subComponents>
 </component>

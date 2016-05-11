@@ -1,7 +1,9 @@
 {
-    "apiUrl": "%s(apiUrl)",
-    "accessToken": "%s(accessToken)",
-    "organizerKey": "%s(organizerKey)",
-    "fromTime":"%s(fromTime)",
-	"toTime":"invalid"
+  "apiUrl": "%s(apiUrl)",
+  "accessToken": "%s(accessToken)",
+  "organizerKey": "%s(organizerKey)",
+  "clientId": "%s(clientId)",
+  "refreshToken": "%s(refreshToken)",
+  "fromTime": "%s(fromTime)",
+  "toTime": "%s(invalidProperty)"
 }

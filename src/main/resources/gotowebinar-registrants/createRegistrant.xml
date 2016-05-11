@@ -27,16 +27,17 @@
     <parameter name="zipCode" description="Zipcode of the registrant."/>
     <parameter name="country" description="Country of the registrant."/>
     <parameter name="phone" description="Phone number of the registrant."/>
-    <parameter name="timeZone" description="Registrant's timezone."/>
+    <parameter name="source" description="The source that lead to the registration. This can be any string."/>
     <parameter name="industry" description="Registrant's work industry."/>
     <parameter name="organization" description="Registrant's work organization."/>
     <parameter name="jobTitle" description="Registrant's  job title."/>
     <parameter name="purchasingTimeFrame" description="Time frame for the purchasing."/>
     <parameter name="roleInPurchaseProcess" description="Role of the purchase process."/>
     <parameter name="numberOfEmployees" description="Number of employees in the registrant's organization."/>
-    <parameter name="status" description="Status of the registrant."/>
     <parameter name="questionsAndComments" description="Questions and Comments for the registrant."/>
     <parameter name="responses" description="Responses for the quetions and comments."/>
+    <parameter name="resendConfirmation"
+               description="ndicates whether the confirmation email should be resent when a registrant is re-registered."/>
     <sequence>
         <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
         <property name="uri.var.firstName" expression="$func:firstName"/>
@@ -48,16 +49,16 @@
         <property name="uri.var.zipCode" expression="$func:zipCode"/>
         <property name="uri.var.country" expression="$func:country"/>
         <property name="uri.var.phone" expression="$func:phone"/>
-        <property name="uri.var.timeZone" expression="$func:timeZone"/>
+        <property name="uri.var.source" expression="$func:source"/>
         <property name="uri.var.industry" expression="$func:industry"/>
         <property name="uri.var.organization" expression="$func:organization"/>
         <property name="uri.var.jobTitle" expression="$func:jobTitle"/>
         <property name="uri.var.purchasingTimeFrame" expression="$func:purchasingTimeFrame"/>
         <property name="uri.var.roleInPurchaseProcess" expression="$func:roleInPurchaseProcess"/>
         <property name="uri.var.numberOfEmployees" expression="$func:numberOfEmployees"/>
-        <property name="uri.var.status" expression="$func:status"/>
         <property name="uri.var.questionsAndComments" expression="$func:questionsAndComments"/>
         <property name="uri.var.responses" expression="$func:responses"/>
+        <property name="uri.var.resendConfirmation" expression="$func:resendConfirmation"/>
         <payloadFactory media-type="json">
             <format>
                 {
@@ -67,104 +68,105 @@
                 }
             </format>
             <args>
-                <arg expression="get-property('uri.var.firstName')"/>
-                <arg expression="get-property('uri.var.lastName')"/>
-                <arg expression="get-property('uri.var.email')"/>
+                <arg expression="$ctx:uri.var.firstName"/>
+                <arg expression="$ctx:uri.var.lastName"/>
+                <arg expression="$ctx:uri.var.email"/>
             </args>
         </payloadFactory>
         <script language="js">
             <![CDATA[
+                var source = mc.getProperty('uri.var.source');
                 var address = mc.getProperty('uri.var.address');
                 var city = mc.getProperty('uri.var.city');
                 var state = mc.getProperty('uri.var.state');
                 var zipCode = mc.getProperty('uri.var.zipCode');
                 var country = mc.getProperty('uri.var.country');
                 var phone = mc.getProperty('uri.var.phone');
-                var timeZone = mc.getProperty('uri.var.timeZone');
                 var industry = mc.getProperty('uri.var.industry');
                 var organization = mc.getProperty('uri.var.organization');
                 var jobTitle = mc.getProperty('uri.var.jobTitle');
                 var purchasingTimeFrame = mc.getProperty('uri.var.purchasingTimeFrame');
 				var roleInPurchaseProcess = mc.getProperty('uri.var.roleInPurchaseProcess');
 				var numberOfEmployees = mc.getProperty('uri.var.numberOfEmployees');
-				var status = mc.getProperty('uri.var.status');
                 var questionsAndComments = mc.getProperty('uri.var.questionsAndComments');
 				var responses = mc.getProperty('uri.var.responses');                
                 
                 payload  = mc.getPayloadJSON();
-                
-                 if (address != null && address!= ""){
+
+                if (source != null && source != ""){
+                	payload.source = source;
+                }
+
+                if (address != null && address != ""){
                 	payload.address = address;
                 }
                 
-                if (city != null && city!= ""){
+                if (city != null && city != ""){
                 	payload.city = city;
                 }
                 
-                 if (state != null && state!= ""){
+                if (state != null && state != ""){
                 	payload.state = state;
                 }
                 
-                 if (zipCode != null && zipCode!= ""){
+                if (zipCode != null && zipCode != ""){
                 	payload.zipCode = zipCode;
                 }
                 
-                if (country != null && country!= ""){
+                if (country != null && country != ""){
                 	payload.country = country;
                 }
                 
-                 if (phone != null && phone!= ""){
+                 if (phone != null && phone != ""){
                 	payload.phone = phone;
                 }
-                
-                 if (timeZone != null && timeZone!= ""){
-                	payload.timeZone = timeZone;
-                }
-                
-                 if (industry != null && industry!= ""){
+
+                if (industry != null && industry != ""){
                 	payload.industry = industry;
                 }
                 
-                 if (organization != null && organization!= ""){
+                if (organization != null && organization != ""){
                 	payload.organization = organization;
                 }
                 
-                 if (jobTitle != null && jobTitle!= ""){
+                if (jobTitle != null && jobTitle != ""){
                 	payload.jobTitle = jobTitle;
                 }
                 
-                if (purchasingTimeFrame != null && purchasingTimeFrame!= ""){
+                if (purchasingTimeFrame != null && purchasingTimeFrame != ""){
                 	payload.purchasingTimeFrame = purchasingTimeFrame;
                 }
                 
-                if (roleInPurchaseProcess != null && roleInPurchaseProcess!= ""){
+                if (roleInPurchaseProcess != null && roleInPurchaseProcess != ""){
                 	payload.roleInPurchaseProcess = roleInPurchaseProcess;
                 }
                 
-                if (numberOfEmployees != null && numberOfEmployees!= ""){
+                if (numberOfEmployees != null && numberOfEmployees != ""){
                 	payload.numberOfEmployees = numberOfEmployees;
                 }
                 
-                if (status != null && status!= ""){
-                	payload.status = status;
-                }
-                
-                if (questionsAndComments != null && questionsAndComments!= ""){
+                if (questionsAndComments != null && questionsAndComments != ""){
                 	payload.questionsAndComments = questionsAndComments;
                 }
                 
-                if (responses != null && responses!= ""){
+                if (responses != null && responses != ""){
                 	payload.responses = eval('(' + responses + ')');
                 }
                	mc.setPayloadJSON(payload);
-                
           ]]>
         </script>
+        <filter xpath="(not($ctx:uri.var.resendConfirmation = '' or (not(string($ctx:uri.var.resendConfirmation)))))">
+            <then>
+                <property name="uri.var.queryParameters"
+                          expression="fn:concat($ctx:uri.var.queryParameters,'?notifyParticipants=',$ctx:uri.var.resendConfirmation)"/>
+            </then>
+        </filter>
         <property name="messageType" value="application/json" scope="axis2"/>
+        <header name="Accept" value="application/vnd.citrix.g2wapi-v1.1+json" scope="transport"/>
         <call>
             <endpoint>
                 <http method="post"
-                      uri-template="{uri.var.apiUrl}/organizers/{uri.var.organizerKey}/webinars/{uri.var.webinarKey}/registrants"/>
+                      uri-template="{uri.var.apiUrl}/organizers/{uri.var.organizerKey}/webinars/{uri.var.webinarKey}/registrants{+uri.var.queryParameters}"/>
             </endpoint>
         </call>
         <!-- Removing custom headers -->

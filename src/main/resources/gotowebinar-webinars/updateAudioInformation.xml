@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~  Copyright (c) 2016, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~
+~  WSO2 Inc. licenses this file to you under the Apache License,
+~  Version 2.0 (the "License"); you may not use this file except
+~  in compliance with the License.
+~  You may obtain a copy of the License at
+~
+~   http://www.apache.org/licenses/LICENSE-2.0
+~
+~  Unless required by applicable law or agreed to in writing,
+~  software distributed under the License is distributed on an
+~  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+~  KIND, either express or implied.  See the License for the
+~  specific language governing permissions and limitations
+~  under the License.
+-->
+<template name="updateAudioInformation" xmlns="http://ws.apache.org/ns/synapse">
+    <parameter name="webinarKey" description="Unique numeric key to retrieve the individual webinar details."/>
+    <parameter name="notifyParticipants"
+               description="Boolean value, which defines whether to send notifications to participants."/>
+    <parameter name="type"
+               description="Indicates how to connect to the webinar's audio conference = ['PSTN', 'VOIP', 'Hybrid', 'Private']"/>
+    <parameter name="tollFreeCountries"
+               description="Two-letter country code, in which countries toll free PSTN numbers are available."/>
+    <parameter name="tollCountries"
+               description="Two-letter country code, in which countries toll PSTN numbers are available."/>
+    <parameter name="attendee" description="Attendee phone number for own conference call system."/>
+    <parameter name="organizer" description="Organizer phone number for own conference call system."/>
+    <parameter name="panelist" description="Panelist phone number for own conference call system."/>
+    <sequence>
+        <property name="uri.var.webinarKey" expression="$func:webinarKey"/>
+        <property name="uri.var.notifyParticipants" expression="$func:notifyParticipants"/>
+        <property name="uri.var.type" expression="$func:type"/>
+        <property name="uri.var.tollFreeCountries" expression="$func:tollFreeCountries"/>
+        <property name="uri.var.tollCountries" expression="$func:tollCountries"/>
+        <property name="uri.var.attendee" expression="$func:attendee"/>
+        <property name="uri.var.organizer" expression="$func:organizer"/>
+        <property name="uri.var.panelist" expression="$func:panelist"/>
+        <payloadFactory media-type="json">
+            <format>
+                {
+                    "type":"$1",
+                    "pstnInfo": {
+                        "tollFreeCountries": $2,
+                        "tollCountries": $3
+                    },
+                    "privateInfo": {
+                        "attendee": "$4",
+                        "organizer": "$5",
+                        "panelist": "$6"
+                    }
+                }
+            </format>
+            <args>
+                <arg expression="$ctx:uri.var.type"/>
+                <arg expression="$ctx:uri.var.tollFreeCountries"/>
+                <arg expression="$ctx:uri.var.tollCountries"/>
+                <arg expression="$ctx:uri.var.attendee"/>
+                <arg expression="$ctx:uri.var.organizer"/>
+                <arg expression="$ctx:uri.var.panelist"/>
+            </args>
+        </payloadFactory>
+        <script language="js">
+            <![CDATA[
+                var type = mc.getProperty('uri.var.type');
+                var tollFreeCountries = mc.getProperty('uri.var.tollFreeCountries');
+                var tollCountries = mc.getProperty('uri.var.tollCountries');
+                var attendee = mc.getProperty('uri.var.attendee');
+                var organizer = mc.getProperty('uri.var.organizer');
+                var panelist = mc.getProperty('uri.var.panelist');
+                payload  = mc.getPayloadJSON();
+
+                if (type == "VOIP"){
+                    delete payload.pstnInfo;
+                    delete payload.privateInfo;
+                }
+
+                if (type == "Private"){
+                    delete payload.pstnInfo;
+                }
+
+                if (type == "PSTN" || type == "Hybrid"){
+                    delete payload.privateInfo;
+                }
+
+                if (attendee == null && attendee == ""){
+                	delete payload.privateInfo.attendee;
+                }
+
+                if (organizer == null && organizer == ""){
+                	delete payload.privateInfo.organizer;
+                }
+
+                if (panelist == null && panelist == ""){
+                	delete payload.privateInfo.panelist;
+                }
+
+               	mc.setPayloadJSON(payload);
+            ]]>
+        </script>
+        <filter xpath="(not($ctx:uri.var.notifyParticipants = '' or (not(string($ctx:uri.var.notifyParticipants)))))">
+            <then>
+                <property name="uri.var.queryParameters"
+                          expression="fn:concat($ctx:uri.var.queryParameters,'?notifyParticipants=',$ctx:uri.var.notifyParticipants)"/>
+            </then>
+        </filter>
+        <call>
+            <endpoint>
+                <http method="post"
+                      uri-template="{uri.var.apiUrl}/organizers/{uri.var.organizerKey}/webinars/{uri.var.webinarKey}/audio{+uri.var.queryParameters}"/>
+            </endpoint>
+        </call>
+        <!-- Removing custom headers -->
+        <header name="Content-Language" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Headers" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Origin" action="remove" scope="transport"/>
+        <header name="Vary" action="remove" scope="transport"/>
+        <header name="Access-Control-Max-Age" action="remove" scope="transport"/>
+        <header name="Access-Control-Allow-Methods" action="remove" scope="transport"/>
+        <header name="ETag" action="remove" scope="transport"/>
+    </sequence>
+</template>

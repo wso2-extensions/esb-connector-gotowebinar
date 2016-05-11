@@ -1,0 +1,11 @@
+{
+  "apiUrl": "%s(apiUrl)",
+  "accessToken": "%s(accessToken)",
+  "organizerKey": "%s(organizerKey)",
+  "clientId": "%s(clientId)",
+  "refreshToken": "%s(refreshToken)",
+  "webinarKey": "%s(upcomingWebinarKey)",
+  "type": "%s(type)",
+  "tollFreeCountries": %s(tollFreeCountries),
+  "tollCountries": %s(tollCountries)
+}
