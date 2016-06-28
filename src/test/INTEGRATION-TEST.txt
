@@ -21,7 +21,7 @@ Note:
 
 Steps to follow in setting integration test.
 
- 1. Download ESB 5.0.0-BETA from our official website.
+ 1. Download ESB 5.0.0-BETA from our official website. Extract the ESB and put "-XX:-UseSplitVerifier" under $JVM_MEM_OPTS into {ESB_HOME}/bin/wso2server.sh.
 
  2. Deploy relevant patches, if applicable.
 
