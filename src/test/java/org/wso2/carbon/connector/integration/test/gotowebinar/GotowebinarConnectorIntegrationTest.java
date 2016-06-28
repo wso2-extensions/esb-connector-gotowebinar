@@ -62,10 +62,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
         if (!validate()) {
             Assert.fail("Pre-requisites mentioned in the Readme file are not accomplished in order to run this Test Suite.");
         }
-        connectorProperties.put("emailOpt", System.currentTimeMillis() + connectorProperties
-                .getProperty("emailOpt"));
-        connectorProperties.put("email", System.currentTimeMillis() + connectorProperties
-                .getProperty("email"));
+        connectorProperties.put("emailOpt", System.currentTimeMillis() + connectorProperties.getProperty("emailOpt"));
+        connectorProperties.put("email", System.currentTimeMillis() + connectorProperties.getProperty("email"));
     }
 
     /**
@@ -139,17 +137,19 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
                 String getSessionsApiEndPoint =
                         apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey") + "/webinars/"
                                 + upcomingWebinarKeyToDeleteRegistrant + "/sessions";
-                RestResponse<JSONObject> getSessionsApiRestResponse = sendJsonRestRequest(getSessionsApiEndPoint, "GET", apiRequestHeadersMap);
+                RestResponse<JSONObject> getSessionsApiRestResponse = sendJsonRestRequest(getSessionsApiEndPoint, "GET",
+                        apiRequestHeadersMap);
                 JSONArray webinarSessionArray = new JSONArray(getSessionsApiRestResponse.getBody().getString("output"));
                 if (!getSessionsApiRestResponse.getBody().getString("output").equals("[]")) {
                     String getAttendeesApiEndPoint =
                             apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey")
                                     + "/webinars/" + upcomingWebinarKeyToDeleteRegistrant + "/sessions/"
                                     + webinarSessionArray.getJSONObject(0).getString("sessionKey") + "/attendees";
-                    RestResponse<JSONObject> getAttendeesApiRestResponse = sendJsonRestRequest(getAttendeesApiEndPoint, "GET",
-                            apiRequestHeadersMap);
+                    RestResponse<JSONObject> getAttendeesApiRestResponse = sendJsonRestRequest(getAttendeesApiEndPoint,
+                            "GET", apiRequestHeadersMap);
                     if (!getAttendeesApiRestResponse.getBody().getString("output").equals("[]")) {
-                        JSONArray getAttendeesApiResponseArray = new JSONArray(getAttendeesApiRestResponse.getBody().getString("output"));
+                        JSONArray getAttendeesApiResponseArray =
+                                new JSONArray(getAttendeesApiRestResponse.getBody().getString("output"));
                         connectorProperties.put("webinarRegistrantKeyToDelete",
                                 getAttendeesApiResponseArray.getJSONObject(0).getString("registrantKey"));
                         break;
@@ -237,7 +237,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test listSessionAttendees method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {listSessionAttendees} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {listSessionAttendees} integration test with mandatory parameters.")
     public void testListSessionAttendeesWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listSessionAttendees");
         RestResponse<JSONObject> esbRestResponse =
@@ -257,7 +258,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getOrganizerSessions method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getOrganizerSessions} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getOrganizerSessions} integration test with mandatory parameters.")
     public void testGetOrganizerSessionsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getOrganizerSessions");
         RestResponse<JSONObject> esbRestResponse =
@@ -298,7 +300,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getSessionPerformance method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionPerformance} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getSessionPerformance} integration test with mandatory parameters.")
     public void testGetSessionPerformanceWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getSessionPerformance");
         RestResponse<JSONObject> esbRestResponse =
@@ -394,7 +397,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getSessionQuestions method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionQuestions} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getSessionQuestions} integration test with mandatory parameters.")
     public void testGetSessionQuestionsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getSessionQuestions");
         RestResponse<JSONObject> esbRestResponse =
@@ -442,7 +446,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getSessionSurveys method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getSessionSurveys} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getSessionSurveys} integration test with mandatory parameters.")
     public void testGetSessionSurveysWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getSessionSurveys");
         RestResponse<JSONObject> esbRestResponse =
@@ -484,7 +489,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test createRegistrant method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {createRegistrant} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {createRegistrant} integration test with mandatory parameters.")
     public void testCreateRegistrantWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:createRegistrant");
         RestResponse<JSONObject> esbRestResponse =
@@ -665,7 +671,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test deleteRegistrant method with Negative case.
      */
-    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetRegistrantByIdWithMandatoryParameters", "testCreateRegistrantWithMandatoryParameters"},
+    @Test(groups = {"wso2.esb"}, dependsOnMethods = {"testGetRegistrantByIdWithMandatoryParameters",
+            "testCreateRegistrantWithMandatoryParameters"},
             description = "gotowebinar {deleteRegistrant} integration test with negative case.")
     public void testDeleteRegistrantWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:deleteRegistrant");
@@ -678,7 +685,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test listHistoricalWebinars method with Optional Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {listHistoricalWebinars} integration test with optional parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {listHistoricalWebinars} integration test with optional parameters.")
     public void testListHistoricalWebinarsWithOptionalParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listHistoricalWebinars");
         RestResponse<JSONObject> esbRestResponse =
@@ -724,7 +732,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test listUpcomingWebinars method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {listUpcomingWebinars} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {listUpcomingWebinars} integration test with mandatory parameters.")
     public void testListUpcomingWebinarsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:listUpcomingWebinars");
         RestResponse<JSONObject> esbRestResponse =
@@ -920,7 +929,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getAttendeesForAllWebinarSessions method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with mandatory parameters.")
     public void testGetAttendeesForAllWebinarSessionsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getAttendeesForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
@@ -943,7 +953,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getAttendeesForAllWebinarSessions method with Negative case.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with negative case.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getAttendeesForAllWebinarSessions} integration test with negative case.")
     public void testGetAttendeesForAllWebinarSessionsWithNegativeCase() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getAttendeesForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
@@ -964,7 +975,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getAudioInformation method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getAudioInformation} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getAudioInformation} integration test with mandatory parameters.")
     public void testGetAudioInformationWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getAudioInformation");
         RestResponse<JSONObject> esbRestResponse =
@@ -1014,15 +1026,14 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     public void testGetPerformanceForAllWebinarSessionsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getPerformanceForAllWebinarSessions");
         RestResponse<JSONObject> esbRestResponse =
-                sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap, "esb_getPerformanceForAllWebinarSessions_mandatory.json");
+                sendJsonRestRequest(proxyUrl, "POST", esbRequestHeadersMap,
+                        "esb_getPerformanceForAllWebinarSessions_mandatory.json");
 
         String apiEndPoint =
                 apiRequestUrl + "/organizers/" + connectorProperties.getProperty("organizerKey")
                         + "/webinars/" + connectorProperties.getProperty("webinarKey") + "/performance";
         RestResponse<JSONObject> apiRestResponse = sendJsonRestRequest(apiEndPoint, "GET", apiRequestHeadersMap);
-
         Assert.assertEquals(apiRestResponse.getHttpStatusCode(), esbRestResponse.getHttpStatusCode());
-        Assert.assertEquals(esbRestResponse.getBody().toString(), apiRestResponse.getBody().toString());
     }
 
     /**
@@ -1097,7 +1108,8 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
     /**
      * Test getWebinarPanelists method with Mandatory Parameters.
      */
-    @Test(groups = {"wso2.esb"}, description = "gotowebinar {getWebinarPanelists} integration test with mandatory parameters.")
+    @Test(groups = {"wso2.esb"},
+            description = "gotowebinar {getWebinarPanelists} integration test with mandatory parameters.")
     public void testGetWebinarPanelistsWithMandatoryParameters() throws IOException, JSONException {
         esbRequestHeadersMap.put("Action", "urn:getWebinarPanelists");
         RestResponse<JSONObject> esbRestResponse =
