@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-~  Copyright (c) 2016, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+~  Copyright (c) 2017, WSO2 Inc. (http://wso2.com) All Rights Reserved.
 ~
 ~  WSO2 Inc. licenses this file to you under the Apache License,
 ~  Version 2.0 (the "License"); you may not use this file except
@@ -125,7 +125,7 @@
         </filter>
         <property name="uri.var.apiUrl" expression="fn:concat($ctx:uri.var.apiUrl, '/G2W/rest')"/>
         <!-- Header information in request -->
-        <header name="Authorization" expression="fn:concat('OAuth oauth_token=', $ctx:uri.var.accessToken)"
+        <header name="Authorization" expression="$ctx:uri.var.accessToken"
                 scope="transport" action="set"/>
         <header name="Content-Type" value="application/json" scope="transport" action="set"/>
         <header name="Accept-Encoding" action="remove" scope="transport"/>
