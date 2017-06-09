@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2016, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *  Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  *  WSO2 Inc. licenses this file to you under the Apache License,
  *  Version 2.0 (the "License"); you may not use this file except
@@ -55,7 +55,7 @@ public class GotowebinarConnectorIntegrationTest extends ConnectorIntegrationTes
 
         apiRequestHeadersMap.putAll(esbRequestHeadersMap);
         apiRequestHeadersMap
-                .put("Authorization", "OAuth oauth_token=" + connectorProperties.getProperty("accessToken"));
+                .put("Authorization", connectorProperties.getProperty("accessToken"));
 
         apiRequestUrl = connectorProperties.getProperty("apiUrl") + "/G2W/rest";
         // Validate Pre-requisites, if not Tests are skipped.
