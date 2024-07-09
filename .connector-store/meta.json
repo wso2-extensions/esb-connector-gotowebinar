@@ -4,7 +4,7 @@
     "category": "Productivity Tools",
     "documentationUrl": "https://docs.wso2.com/display/ESBCONNECTORS/GoToWebinar+Connector",
     "description": "The GoToWebinar connector allows you to access the GoToWebinar REST API through the WSO2 ESB. The GoToWebinar API provides seamless integration of webinar registrant and attendee data into your existing infrastructure or third-party applications.",
-    "status": "Unsupported",
+    "status": "Active",
     "labels": [
         "connector"
     ],
